@@ -10,7 +10,8 @@ export function login(email, password) {
   // store token in local storage
   localStorage.setItem('token', token)
 
-  return true
+  // return { 'status': false, 'message': 'failed to login' }
+  return { 'status': true, 'message': '' }
 }
 
 export function logout() {

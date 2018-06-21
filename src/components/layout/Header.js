@@ -1,15 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 // import PropTypes from 'prop-types';
-import { WithRouter } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Tabs, Tab, Button } from '@material-ui/core';
+// import { WithRouter } from 'react-router-dom';
+import { AppBar, Toolbar, Typography, Tabs, Button } from '@material-ui/core';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
-import { isLoggedIn, logout } from '../../services';
 
 const theme = createMuiTheme({
   palette: {
-    primary: { main: green[500] }, // Purple and green play nicely together.
+    primary: { main: green[500] },
     type: 'dark',
   },
 });
@@ -22,35 +21,28 @@ const NavButton = ({ url }) => (
   </Link>
 )
 
-const LoginButton = ({}) => (
-    <Link to='/login' style={{ textDecoration: 'none' }} >
-      <Button variant="outlined">
-        Login
-      </Button>
-    </Link>
+const LoginButton = () => (
+  <Link to='/login' style={{ textDecoration: 'none' }} >
+    <Button variant="outlined">
+      Login
+    </Button>
+  </Link>
 )
 
-function LogoutButton(props) {
-  return (
-    <Button onClick={props.onClick}>
-      Logout
-    </Button>
-  );
-}
-
-
+const LogoutButton = (props) => (
+  <Button onClick={props.onClick}>
+    Logout
+  </Button>
+)
 
 export default class Header extends Component {
 
-  handleLogoutClick = () => {
-    logout()
-  }
-
   render() {
+    const { isLoggedIn, onLogoutClick } = this.props
 
     let button
-    if (isLoggedIn()) {
-      button = <LogoutButton onClick={this.handleLogoutClick} />;
+    if (isLoggedIn) {
+      button = <LogoutButton onClick={onLogoutClick} />;
     } else {
       button = <LoginButton />
     }
@@ -58,10 +50,11 @@ export default class Header extends Component {
       return ( <MuiThemeProvider theme={theme}>
         <AppBar position="static">
           <Toolbar>
-            <Typography variant="headline">
-              Connacht Rugby
-            </Typography>
-            {isLoggedIn() &&
+            <Link to="/" style={{ textDecoration: 'none' }} >
+                <Typography variant="headline">Connacht Rugby</Typography>
+            </Link>
+
+            {isLoggedIn &&
               <Fragment>
                 <NavButton url="home" />
                 <NavButton url="matches" />
@@ -70,8 +63,7 @@ export default class Header extends Component {
             }
             <Tabs style={{flex: 1}}></Tabs>
             {button}
-
-            </Toolbar>
+          </Toolbar>
         </AppBar>
       </MuiThemeProvider>
     )
