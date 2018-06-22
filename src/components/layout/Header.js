@@ -58,7 +58,7 @@ export default class Header extends Component {
               <Fragment>
                 <NavButton url="home" />
                 <NavButton url="matches" />
-                <NavButton url="test3" />
+                <NavButton url="drawer" />
               </Fragment>
             }
             <Tabs style={{flex: 1}}></Tabs>

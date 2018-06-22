@@ -1,7 +1,6 @@
-import React, { Component, Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Paper, Grid, Typography } from '@material-ui/core';
-import TextField from '@material-ui/core/TextField';
+import { Grid, Paper, TextField, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 

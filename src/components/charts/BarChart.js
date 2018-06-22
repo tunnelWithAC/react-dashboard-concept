@@ -2,11 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Bar } from 'react-chartjs-2';
 
-const options = {
-  legend: {
-    display: false,
-  },
-}
 
 const colors = [
   'rgba(255, 99, 132, 0.2)',
@@ -44,7 +39,8 @@ class BarChart extends Component {
   }
 
   render() {
-    let { label, data } = this.props
+    let { label, data, options } = this.props
+    console.log(options)
     const chartData = this.mapColors(data, colors)
     return (
       <div className="chart">

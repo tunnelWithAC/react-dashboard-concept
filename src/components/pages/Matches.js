@@ -1,9 +1,32 @@
 import React, { Component } from 'react';
-import { Input, InputLabel, Select, MenuItem, FormControl, Grid } from '@material-ui/core';
+import { InputLabel, Select, MenuItem, FormControl, Grid } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { Block, SortTable, Row } from '../layout';
+import { Block, SortTable } from '../layout';
 // import  from './SortTable';
-import { BarChart, InteractiveBarChart } from '../charts';
+import { BarChart, InteractiveBarChart, HorizontalBarChart } from '../charts';
+import { getMatchData, getHorizontalBarData } from '../../stores/demoStore';
+import { map } from  'lodash';
+
+const matchData = getMatchData()
+const horizontalBarData = getHorizontalBarData()
+
+const hideLegendOptions = {
+  legend: {
+    display: false,
+  },
+  scales: {
+    xAxes: [{
+        ticks: {
+            beginAtZero:true
+        }
+    }],
+    yAxes: [{
+        ticks: {
+            beginAtZero:true
+        }
+    }],
+  }
+}
 
 const styles = theme => ({
   root: {
@@ -31,9 +54,20 @@ export default withStyles(styles)(class extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  clickBox = (n, v) => {
+    console.log('box clicked: ', n , v)
+  }
 
   render() {
     const { classes } = this.props;
+    let event_names = map(matchData, 'name');
+    let e = []
+    //const result = map(event_names, v => assign({}, v, { isChecked: true }));
+    event_names.forEach(function(event_name) {
+      e.push({'event_name': event_name, 'checked': true})
+      // event_name['checked'] = true
+    })
+
 
     const testData = {
       labels: ['a', 'b', 'c', 'd'],
@@ -95,12 +129,15 @@ export default withStyles(styles)(class extends Component {
             chart={
                 <BarChart
                   data={testData}
+                  options={hideLegendOptions}
                 />
               }
           />
           <Block xs={12} sm={6} leftText='Tickets Pacing'
             chart={
-                <BarChart/>
+                <BarChart
+                  options={hideLegendOptions}
+                />
               }
           />
 
@@ -110,18 +147,30 @@ export default withStyles(styles)(class extends Component {
           <Block xs={12} sm={4} leftText='# Days to game/ lead time' content='18 days out'/>
 
           {/* Row 4 Horizonally oriented histogram & table */}
-          <Block xs={12} sm={6} leftText='Ticket Category Breakdown' rightText='# SOLD 5400' chart={<BarChart / >}/>
+          <Block xs={12} sm={6}
+            leftText='Ticket Category Breakdown'
+            rightText='# SOLD 5400'
+            chart={
+              <HorizontalBarChart
+                data={horizontalBarData}
+                options={hideLegendOptions}
+              />
+            }
+          />
           <Block xs={12} sm={6} leftText='Sales Sources' rightText='# SOLD 5400' chart={<SortTable/>}/>
+          <br/>
 
           {/* Row 5 Table showing ticket sales by section */}
           <Block xs={12} sm={12} content='Ticket Sales by Section' chart={<SortTable/>}/>
 
           {/* Row 6: Interactive bar chart - retrospective ticket sales per day */}
-
           <Block xs={12} content='Retrospective ticket sales per day'
           chart={
                 <InteractiveBarChart
                   data={testData}
+                  options={hideLegendOptions}
+                  clickBox={this.clickBox}
+                  event_names={e}
                 />
               }
           />

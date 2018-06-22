@@ -1,7 +1,8 @@
 import React from 'react';
-import { Grid, withStyles, Button } from '@material-ui/core';
+import { Grid, withStyles } from '@material-ui/core';
 import { Matches } from '../pages';
-import { black, green } from '@material-ui/core/colors';
+import  ResponsiveDrawer from './ResponsiveDrawer';
+// import { black, green } from '@material-ui/core/colors';
 
 const styles = theme => ({
   Paper: {
@@ -23,7 +24,7 @@ function NavContainer({ classes }) {
   return (
     <Grid container>
       <Grid item xs={12} sm={2}>
-        Sidenav Here
+        <ResponsiveDrawer />
       </Grid>
       <Grid item xs={12} sm={10} className={classes.main}>
         <Matches/>

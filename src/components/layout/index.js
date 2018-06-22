@@ -6,7 +6,8 @@ import SortTable from './SortTable';
 import Row from './Row';
 import ChipsArray from './ChipsArray';
 import Checkboxes from './Checkboxes';
+import ResponsiveDrawer  from './ResponsiveDrawer';
 
 export {
-  Header, NavContainer, Login, Block, SortTable, Row, ChipsArray, Checkboxes
+  Header, NavContainer, Login, Block, SortTable, Row, ChipsArray, Checkboxes, ResponsiveDrawer
 }

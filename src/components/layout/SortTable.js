@@ -166,18 +166,13 @@ class EnhancedTable extends Component {
                     <CustomTableCell component="th" scope="row">
                       {n.name}
                     </CustomTableCell>
-                    <CustomTableCell numeric>{n.calories}</CustomTableCell>
-                    <CustomTableCell numeric>{n.fat}</CustomTableCell>
-                    <CustomTableCell numeric>{n.carbs}</CustomTableCell>
-                    <CustomTableCell numeric>{n.protein}</CustomTableCell>
+                    <CustomTableCell numeric>{n.ticketsSold}</CustomTableCell>
+                    <CustomTableCell numeric>{n.ticketsRemaining}</CustomTableCell>
+                    <CustomTableCell numeric>{n.percentRemaining}</CustomTableCell>
+
                   </TableRow>
                 );
               })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 49 * emptyRows }}>
-                  <CustomTableCell colSpan={6} />
-                </TableRow>
-              )}
             </TableBody>
           </Table>
         </div>

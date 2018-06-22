@@ -1,41 +1,47 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
+import { green } from '@material-ui/core/colors';
+import { assign, extend, findIndex, map } from  'lodash';
 
-class Checkboxes extends React.Component {
-  state = {
-    checkedA: true,
-    checkedB: true,
-    checkedF: true,
-  };
+let clickBox
+let event_names
+
+class Checkboxes extends Component {
+
+
+  constructor(props) {
+    super(props)
+    clickBox = props.clickBox
+    event_names = props.event_names
+    console.log("event_names: ",event_names)
+  }
 
   handleChange = name => event => {
+    console.log(event_names)
+    let n = name
+    n['checked'] = event.target.checked
+    clickBox(n)
     this.setState({ [name]: event.target.checked });
   };
 
   render() {
+    const { event_names } = this.props;
+
+    const event_checkboxes = event_names.map(({event_name, checked}, index) =>
+        <div key={index}>
+
+          {event_name}
+          <Checkbox
+            onChange={this.handleChange({event_name})}
+            value={event_name}
+            color="primary"
+          />
+        </div>
+    );
+
     return (
       <div>
-        <Checkbox
-          checked={this.state.checkedA}
-          onChange={this.handleChange('checkedA')}
-          value="checkedA"
-        />
-        <Checkbox
-          checked={this.state.checkedB}
-          onChange={this.handleChange('checkedB')}
-          value="checkedB"
-          color="primary"
-        />
-        <Checkbox value="checkedC" />
-        <Checkbox disabled value="checkedD" />
-        <Checkbox disabled checked value="checkedE" />
-        <Checkbox
-          checked={this.state.checkedF}
-          onChange={this.handleChange('checkedF')}
-          value="checkedF"
-          indeterminate
-        />
-        <Checkbox defaultChecked color="default" value="checkedG" />
+        {event_checkboxes}
       </div>
     );
   }

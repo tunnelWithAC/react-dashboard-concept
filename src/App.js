@@ -2,25 +2,16 @@ import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import { CssBaseline } from '@material-ui/core';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { Header, Login, NavContainer } from './components/layout';
+import { Header, Login, NavContainer, ResponsiveDrawer } from './components/layout';
+import { green } from '@material-ui/core/colors';
 import { Matches } from './components/pages';
 import { isLoggedIn, login, logout } from './services/Auth';
+import './App.css';
 
 const theme = createMuiTheme({
-  overrides: {
-    MuiInput: {
-      underline: {
-        '&:before': { //underline color when textfield is inactive
-          backgroundColor: 'red',
-          height: 1
-        },
-        '&:hover:not($disabled):before': { //underline color when hovered
-          backgroundColor: 'green',
-          height: 1
-        },
-      }
-    }
-  }
+  palette: {
+    primary: green,
+  },
 })
 
 // 404 page
@@ -63,15 +54,18 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <div className="App">
-          {/* <CssBaseline /> */}
+          {/* CssBaseline remove margins between components and the sides of the screen */}
           <CssBaseline />
+
           <Router>
             {/* Nest everything inside a Fragment component since a Router component can only have one child */}
             <Fragment>
+
               <Header
                 isLoggedIn={this.state.isLoggedIn}
                 onLogoutClick={this.handleLogout}
               />
+
               <Switch>
                 <Route path="/login" render={() =>
                     <Login
@@ -84,11 +78,16 @@ class App extends Component {
                 <Route path="/matches" render={() =>
                     <Matches/>
                 }/>
+                <Route path="/drawer" render={() =>
+                    <ResponsiveDrawer/>
+                }/>
                 <Route path="/" component={NavContainer} />
                 <Route component={NoMatch} />
               </Switch>
+
             </Fragment>
           </Router>
+
           {/* Footer */}
           <div>
             <br/>
